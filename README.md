@@ -4,3 +4,9 @@ A practical functional library for JavaScript programmers. [Ramda.js](https://ra
 
 - [x] add
 - [x] addIndex
+- [x] all
+- [x] allPass
+- [x] always
+- [x] any
+- [x] anyPass
+- [x] curry

@@ -16,10 +16,6 @@ final class Ramda_swiftTests: XCTestCase {
     func test_all() {
         let equals3 = { (n: Int) in n == 3 }
         XCTAssertTrue(R.all(equals3)([3, 3, 3]))
-    }
-
-    func test_all_negate() {
-        let equals3 = { (n: Int) in n == 3 }
         XCTAssertFalse(R.all(equals3)([3, 4, 3]))
     }
 
@@ -27,11 +23,6 @@ final class Ramda_swiftTests: XCTestCase {
         let lessThan10 = { (n: Int) in n < 10 }
         let greaterThan0 = { (n: Int) in n > 0 }
         XCTAssertTrue(R.allPass([lessThan10, greaterThan0])([1, 2, 9]))
-    }
-
-    func test_allPass_negate() {
-        let lessThan10 = { (n: Int) in n < 10 }
-        let greaterThan0 = { (n: Int) in n > 0 }
         XCTAssertFalse(R.allPass([lessThan10, greaterThan0])([1, 2, -1]))
     }
 
@@ -40,5 +31,18 @@ final class Ramda_swiftTests: XCTestCase {
         let instance = Test()
         let result = R.always(instance)
         XCTAssertTrue(instance === result)
+    }
+
+    func test_any() {
+        let equals3 = { (n: Int) in n == 3 }
+        XCTAssertTrue(R.any(equals3)([1, 3, 2]))
+        XCTAssertFalse(R.any(equals3)([1, 4, 2]))
+    }
+
+    func test_anyPass() {
+        let lessThan10 = { (n: Int) in n < 10 && n > 0 }
+        let greaterThan0 = { (n: Int) in n > 0 }
+        XCTAssertTrue(R.anyPass([lessThan10, greaterThan0])([11, -1, 9]))
+        XCTAssertFalse(R.anyPass([lessThan10, greaterThan0])([-2, -1, -4]))
     }
 }
