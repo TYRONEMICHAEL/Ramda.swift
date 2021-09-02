@@ -33,6 +33,13 @@ final class Ramda_swiftTests: XCTestCase {
         XCTAssertTrue(instance === result)
     }
 
+    func test_and() {
+        XCTAssertTrue(R.and(true, true))
+        XCTAssertFalse(R.and(false, true))
+        XCTAssertFalse(R.and(true, false))
+        XCTAssertFalse(R.and(false)(false))
+    }
+
     func test_any() {
         let equals3 = { (n: Int) in n == 3 }
         XCTAssertTrue(R.any(equals3)([1, 3, 2]))
