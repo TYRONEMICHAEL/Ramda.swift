@@ -52,4 +52,46 @@ final class Ramda_swiftTests: XCTestCase {
         XCTAssertTrue(R.anyPass([lessThan10, greaterThan0])([11, -1, 9]))
         XCTAssertFalse(R.anyPass([lessThan10, greaterThan0])([-2, -1, -4]))
     }
+
+    func test_aperture() {
+        XCTAssertEqual(R.aperture(2, [1, 2, 3, 4, 5]), [[1, 2], [3, 4], [5]])
+    }
+
+    func test_append() {
+        XCTAssertEqual(R.append(3, [1, 2]), [1, 2, 3])
+        XCTAssertEqual(R.append([2, 3], [1]), [1, 2, 3])
+    }
+
+    func test_map() {
+        let double = { (n: Int) in n * 2 }
+        let listDouble: ([Int]) -> [Int] = R.map(double)
+        let optionalDouble: (Int?) -> Int? = R.map(double)
+        let resultDouble: (Result<Int, Never>) -> Result<Int, Never> = R.map(double)
+
+        XCTAssertEqual(listDouble([1, 2]), [2, 4])
+        XCTAssertEqual(optionalDouble(2), 4)
+        XCTAssertEqual(resultDouble(.success(2)), Result.success(4))
+    }
+
+    func test_reduce() {
+        let double = { (r: Int, n: Int) in r + n * 2 }
+        XCTAssertEqual(R.reduce(double, 1, [1, 2]), 7)
+    }
+
+    func test_ap() {
+        let double = { (n: Int) in n * 2 }
+        let add3 = { (n: Int) in n + 3 }
+        XCTAssertEqual(R.ap([double, add3], [1, 2 ,3]), [2, 4, 6, 4, 5, 6])
+    }
+
+    func test_apply() {
+        let max = { (a: [Int]) in a.max() }
+        XCTAssertEqual(max([1, 2, -3, 200]), 200)
+    }
+
+    func test_applyTo() {
+        let min = { (a: [Int]) in a.min() }
+        let applyTo: (_ fn: @escaping ([Int]) -> Int?) -> Int? = R.applyTo([1, 2, 3, -200])
+        XCTAssertEqual(applyTo(min), -200)
+    }
 }
